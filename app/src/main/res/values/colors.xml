@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Primary Colors (WhatsApp-like) -->
+    <color name="colorPrimary">#075E54</color>
+    <color name="colorPrimaryDark">#054d44</color>
+    <color name="colorAccent">#25D366</color>
+
+    <!-- Secondary Colors -->
+    <color name="colorSecondary">#128C7E</color>
+    <color name="colorSecondaryVariant">#075E54</color>
+
+    <!-- Background Colors -->
+    <color name="backgroundColor">#FFFFFF</color>
+    <color name="backgroundChatLight">#ECE5DD</color>
+    <color name="backgroundChatDark">#0D1418</color>
+
+    <!-- Message Bubble Colors -->
+    <color name="bubbleSent">#DCF8C6</color>
+    <color name="bubbleReceived">#FFFFFF</color>
+    <color name="bubbleSentDark">#005C4B</color>
+    <color name="bubbleReceivedDark">#1F2C33</color>
+
+    <!-- Text Colors -->
+    <color name="textPrimary">#000000</color>
+    <color name="textSecondary">#667781</color>
+    <color name="textWhite">#FFFFFF</color>
+    <color name="textGray">#8696A0</color>
+    <color name="textBlue">#53BDEB</color>
+
+    <!-- Status Colors -->
+    <color name="statusOnline">#25D366</color>
+    <color name="statusOffline">#8696A0</color>
+    <color name="statusTyping">#075E54</color>
+
+    <!-- Message Status Colors -->
+    <color name="messageSent">#8696A0</color>
+    <color name="messageDelivered">#8696A0</color>
+    <color name="messageRead">#53BDEB</color>
+
+    <!-- Divider Colors -->
+    <color name="divider">#E0E0E0</color>
+    <color name="dividerDark">#2A3942</color>
+
+    <!-- Button Colors -->
+    <color name="buttonEnabled">#25D366</color>
+    <color name="buttonDisabled">#BDBDBD</color>
+
+    <!-- Icon Colors -->
+    <color name="iconTint">#075E54</color>
+    <color name="iconTintSecondary">#8696A0</color>
+
+    <!-- Badge Colors -->
+    <color name="badgeBackground">#25D366</color>
+    <color name="badgeText">#FFFFFF</color>
+
+    <!-- Error Colors -->
+    <color name="errorColor">#D32F2F</color>
+    <color name="errorBackground">#FFEBEE</color>
+
+    <!-- Success Colors -->
+    <color name="successColor">#388E3C</color>
+    <color name="successBackground">#E8F5E9</color>
+
+    <!-- Warning Colors -->
+    <color name="warningColor">#F57C00</color>
+    <color name="warningBackground">#FFF3E0</color>
+
+    <!-- Common Colors -->
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="transparent">#00000000</color>
+    <color name="gray_light">#F5F5F5</color>
+    <color name="gray">#9E9E9E</color>
+    <color name="gray_dark">#424242</color>
+</resources>
