@@ -251,25 +251,33 @@ class ChatActivity : AppCompatActivity() {
     }
 
     private fun sendMessage(message: Message) {
+        android.util.Log.d("ChatActivity", "Sending message: ${message.messageId}")
+
         // Save message
         FirebaseUtil.messagesCollectionForChat(chatId)
             .document(message.messageId)
             .set(message)
             .addOnSuccessListener {
+                android.util.Log.d("ChatActivity", "Message saved successfully")
                 updateChatLastMessage(message)
             }
-            .addOnFailureListener {
-                Toast.makeText(this, "Failed to send message", Toast.LENGTH_SHORT).show()
+            .addOnFailureListener { e ->
+                android.util.Log.e("ChatActivity", "Failed to send message", e)
+                Toast.makeText(this, "Failed to send message: ${e.message}", Toast.LENGTH_SHORT).show()
             }
     }
 
     private fun updateChatLastMessage(message: Message) {
         val chatRef = FirebaseUtil.chatDocument(chatId)
 
+        android.util.Log.d("ChatActivity", "Updating chat: $chatId")
+
         chatRef.get().addOnSuccessListener { doc ->
             val chat = if (doc.exists()) {
+                android.util.Log.d("ChatActivity", "Chat exists, updating")
                 doc.toObject(Chat::class.java) ?: createNewChat()
             } else {
+                android.util.Log.d("ChatActivity", "Chat doesn't exist, creating new")
                 createNewChat()
             }
 
@@ -291,7 +299,15 @@ class ChatActivity : AppCompatActivity() {
             unreadMap[otherUser!!.uid] = currentCount + 1
             chat.unreadCount = unreadMap
 
+            android.util.Log.d("ChatActivity", "Saving chat with participants: ${chat.participants}")
+
             chatRef.set(chat)
+                .addOnSuccessListener {
+                    android.util.Log.d("ChatActivity", "Chat updated successfully!")
+                }
+                .addOnFailureListener { e ->
+                    android.util.Log.e("ChatActivity", "Failed to update chat", e)
+                }
         }
     }
 

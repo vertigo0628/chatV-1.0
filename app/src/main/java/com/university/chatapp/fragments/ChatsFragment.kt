@@ -1,5 +1,6 @@
 package com.university.chatapp.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -65,8 +66,8 @@ class ChatsFragment : Fragment() {
 
     private fun setupClickListeners() {
         fabNewChat.setOnClickListener {
-            // Open contacts/new chat activity
-            // startActivity(Intent(requireContext(), ContactsActivity::class.java))
+            // Open contacts activity to select a user
+            startActivity(Intent(requireContext(), com.university.chatapp.activities.ContactsActivity::class.java))
         }
 
         swipeRefresh.setOnRefreshListener {
@@ -79,15 +80,19 @@ class ChatsFragment : Fragment() {
 
         val currentUserId = FirebaseUtil.currentUserId()
 
+        android.util.Log.d("ChatsFragment", "Loading chats for user: $currentUserId")
+
+        // Simplified query without orderBy to avoid index requirement
         chatListener = FirebaseUtil.chatsCollection()
             .whereArrayContains("participants", currentUserId)
-            .orderBy("lastMessageTime", Query.Direction.DESCENDING)
             .addSnapshotListener { snapshot, error ->
                 progressBar.visibility = View.GONE
                 swipeRefresh.isRefreshing = false
 
                 if (error != null) {
-                    showError("Error loading chats")
+                    android.util.Log.e("ChatsFragment", "Error loading chats", error)
+                    showError("Error loading chats: ${error.message}")
+                    showEmptyState()
                     return@addSnapshotListener
                 }
 
@@ -98,6 +103,11 @@ class ChatsFragment : Fragment() {
                         chat?.let { chats.add(it) }
                     }
 
+                    // Sort in memory instead of in query
+                    chats.sortByDescending { it.lastMessageTime }
+
+                    android.util.Log.d("ChatsFragment", "Loaded ${chats.size} chats")
+
                     if (chats.isEmpty()) {
                         showEmptyState()
                     } else {
@@ -105,16 +115,21 @@ class ChatsFragment : Fragment() {
                     }
 
                     chatAdapter.updateChats(chats)
+                } else {
+                    android.util.Log.d("ChatsFragment", "Snapshot is null")
+                    showEmptyState()
                 }
             }
     }
 
     private fun showEmptyState() {
+        android.util.Log.d("ChatsFragment", "Showing empty state")
         tvEmpty.visibility = View.VISIBLE
         rvChats.visibility = View.GONE
     }
 
     private fun hideEmptyState() {
+        android.util.Log.d("ChatsFragment", "Hiding empty state")
         tvEmpty.visibility = View.GONE
         rvChats.visibility = View.VISIBLE
     }

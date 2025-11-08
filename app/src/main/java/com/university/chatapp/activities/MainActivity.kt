@@ -29,27 +29,37 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Check if user is logged in
-        if (!FirebaseUtil.isUserLoggedIn()) {
-            startActivity(Intent(this, LoginActivity::class.java))
-            finish()
-            return
+        try {
+            android.util.Log.d("MainActivity", "MainActivity onCreate started")
+
+            // Check if user is logged in
+            if (!FirebaseUtil.isUserLoggedIn()) {
+                android.util.Log.d("MainActivity", "User not logged in, navigating to login")
+                startActivity(Intent(this, LoginActivity::class.java))
+                finish()
+                return
+            }
+
+            setContentView(R.layout.activity_main)
+
+            toolbar = findViewById(R.id.toolbar)
+            tabLayout = findViewById(R.id.tabLayout)
+
+            setSupportActionBar(toolbar)
+            supportActionBar?.title = "ChatApp"
+
+            setupTabs()
+            setupFCM()
+            updateUserStatus(true)
+
+            // Test Firebase connection (remove after testing)
+            testFirebaseConnection()
+
+            android.util.Log.d("MainActivity", "MainActivity initialized successfully")
+        } catch (e: Exception) {
+            android.util.Log.e("MainActivity", "Error in onCreate", e)
+            android.widget.Toast.makeText(this, "Error: ${e.message}", android.widget.Toast.LENGTH_LONG).show()
         }
-
-        setContentView(R.layout.activity_main)
-
-        toolbar = findViewById(R.id.toolbar)
-        tabLayout = findViewById(R.id.tabLayout)
-
-        setSupportActionBar(toolbar)
-        supportActionBar?.title = "ChatApp"
-
-        setupTabs()
-        setupFCM()
-        updateUserStatus(true)
-
-        // Test Firebase connection (remove after testing)
-        testFirebaseConnection()
     }
 
     private fun setupTabs() {

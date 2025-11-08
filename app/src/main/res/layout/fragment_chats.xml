@@ -29,8 +29,10 @@
                 android:text="@string/empty_chats"
                 android:textSize="18sp"
                 android:textColor="@color/textSecondary"
+                android:textAlignment="center"
                 android:gravity="center"
-                android:visibility="gone" />
+                android:padding="32dp"
+                android:visibility="visible" />
 
             <ProgressBar
                 android:id="@+id/progressBar"
@@ -51,6 +53,9 @@
         android:layout_margin="16dp"
         android:contentDescription="New Chat"
         android:src="@android:drawable/ic_input_add"
-        app:tint="@color/white" />
+        android:backgroundTint="@color/colorAccent"
+        app:tint="@color/white"
+        app:elevation="6dp"
+        app:pressedTranslationZ="12dp" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

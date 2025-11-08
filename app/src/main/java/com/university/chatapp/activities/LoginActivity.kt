@@ -26,25 +26,33 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Check if already logged in
-        if (FirebaseUtil.isUserLoggedIn()) {
-            navigateToMain()
-            return
+        try {
+            // Check if already logged in
+            if (FirebaseUtil.isUserLoggedIn()) {
+                android.util.Log.d("LoginActivity", "User already logged in, navigating to main")
+                navigateToMain()
+                return
+            }
+
+            setContentView(R.layout.activity_login)
+
+            // Initialize views
+            etEmail = findViewById(R.id.etEmail)
+            etPassword = findViewById(R.id.etPassword)
+            btnLogin = findViewById(R.id.btnLogin)
+            tvRegister = findViewById(R.id.tvRegister)
+            tvForgotPassword = findViewById(R.id.tvForgotPassword)
+            progressBar = findViewById(R.id.progressBar)
+
+            auth = FirebaseAuth.getInstance()
+
+            setupClickListeners()
+
+            android.util.Log.d("LoginActivity", "LoginActivity initialized successfully")
+        } catch (e: Exception) {
+            android.util.Log.e("LoginActivity", "Error in onCreate", e)
+            Toast.makeText(this, "Error initializing: ${e.message}", Toast.LENGTH_LONG).show()
         }
-
-        setContentView(R.layout.activity_login)
-
-        // Initialize views
-        etEmail = findViewById(R.id.etEmail)
-        etPassword = findViewById(R.id.etPassword)
-        btnLogin = findViewById(R.id.btnLogin)
-        tvRegister = findViewById(R.id.tvRegister)
-        tvForgotPassword = findViewById(R.id.tvForgotPassword)
-        progressBar = findViewById(R.id.progressBar)
-
-        auth = FirebaseAuth.getInstance()
-
-        setupClickListeners()
     }
 
     private fun setupClickListeners() {
@@ -99,16 +107,25 @@ class LoginActivity : AppCompatActivity() {
         btnLogin.isEnabled = false
         progressBar.visibility = View.VISIBLE
 
-        auth.signInWithEmailAndPassword(email, password)
-            .addOnSuccessListener {
-                Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show()
-                navigateToMain()
-            }
-            .addOnFailureListener { e ->
-                btnLogin.isEnabled = true
-                progressBar.visibility = View.GONE
-                Toast.makeText(this, "Login failed: ${e.message}", Toast.LENGTH_LONG).show()
-            }
+        try {
+            auth.signInWithEmailAndPassword(email, password)
+                .addOnSuccessListener {
+                    android.util.Log.d("LoginActivity", "Login successful for: $email")
+                    Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show()
+                    navigateToMain()
+                }
+                .addOnFailureListener { e ->
+                    btnLogin.isEnabled = true
+                    progressBar.visibility = View.GONE
+                    android.util.Log.e("LoginActivity", "Login failed", e)
+                    Toast.makeText(this, "Login failed: ${e.message}", Toast.LENGTH_LONG).show()
+                }
+        } catch (e: Exception) {
+            btnLogin.isEnabled = true
+            progressBar.visibility = View.GONE
+            android.util.Log.e("LoginActivity", "Login exception", e)
+            Toast.makeText(this, "Error: ${e.message}", Toast.LENGTH_LONG).show()
+        }
     }
 
     private fun resetPassword(email: String) {

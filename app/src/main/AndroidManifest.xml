@@ -30,9 +30,9 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@android:drawable/stat_sys_phone_call_on_hold"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@android:drawable/stat_sys_vp_phone_call"
         android:supportsRtl="true"
         android:theme="@style/Theme.ChatApp"
         android:usesCleartextTraffic="false"
@@ -76,6 +76,13 @@
         <!-- Profile Activity -->
         <activity
             android:name=".activities.ProfileActivity"
+            android:exported="false"
+            android:parentActivityName=".activities.MainActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- Contacts Activity -->
+        <activity
+            android:name=".activities.ContactsActivity"
             android:exported="false"
             android:parentActivityName=".activities.MainActivity"
             android:screenOrientation="portrait" />
