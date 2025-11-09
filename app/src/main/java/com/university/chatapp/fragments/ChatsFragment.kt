@@ -138,6 +138,12 @@ class ChatsFragment : Fragment() {
         android.widget.Toast.makeText(requireContext(), message, android.widget.Toast.LENGTH_SHORT).show()
     }
 
+    override fun onResume() {
+        super.onResume()
+        // Reload chats when returning to the fragment
+        loadChats()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         chatListener?.remove()
