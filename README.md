@@ -1,4 +1,4 @@
-# chatV
+
 # chatV
 ChatV: The Kotlin-Native Messenger
 A sample messaging application that demonstrates how to build a scalable and feature-rich chat client on Android.
