@@ -7,3 +7,4 @@ Real-time Messaging: Instant message delivery using [Backend Service].
 UI: Built with Xml  for a smooth, intuitive experience.
 Native Performance: Optimized using Kotlin 
 Secure Login: Includes user authentication and session management.
+.
